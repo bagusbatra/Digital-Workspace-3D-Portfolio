@@ -1,18 +1,27 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useUIStore, type ActivePanelId } from "@/state/uiStore";
 
-const SECTIONS = [
-  { label: "ABOUT", to: "/workspace#about" },
-  { label: "PROJECTS", to: "/projects" },
-  { label: "SKILLS", to: "/workspace#skills" },
-  { label: "EXPERIENCE", to: "/workspace#experience" },
-  { label: "CONTACT", to: "/workspace#contact" },
+const SECTIONS: { label: string; panel: ActivePanelId }[] = [
+  { label: "ABOUT", panel: "about" },
+  { label: "SKILLS", panel: "skills" },
+  { label: "EXPERIENCE", panel: "experience" },
+  { label: "CONTACT", panel: "contact" },
 ];
 
 // Navbar konvensional (PRD §16) — jalur akses ke semua konten yang TIDAK bergantung
 // pada interaksi 3D, agar recruiter tidak wajib memahami mekanisme 3D (REQ-016).
+// About/Skills/Experience/Contact dibuka sebagai panel di dalam Workspace (bukan
+// halaman terpisah), karena §6 Information Architecture menempatkannya di bawah Workspace.
 export default function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const openPanel = useUIStore((s) => s.openPanel);
   const inWorkspace = location.pathname.startsWith("/workspace");
+
+  const goToPanel = (panel: ActivePanelId) => {
+    openPanel(panel);
+    if (!inWorkspace) navigate("/workspace");
+  };
 
   if (inWorkspace) {
     return (
@@ -39,11 +48,19 @@ export default function Navbar() {
       <ul className="hidden items-center gap-6 md:flex">
         {SECTIONS.map((s) => (
           <li key={s.label}>
-            <Link to={s.to} className="text-secondary hover:text-text">
+            <button
+              onClick={() => goToPanel(s.panel)}
+              className="text-secondary hover:text-text"
+            >
               {s.label}
-            </Link>
+            </button>
           </li>
         ))}
+        <li>
+          <Link to="/projects" className="text-secondary hover:text-text">
+            PROJECTS
+          </Link>
+        </li>
       </ul>
       <Link
         to="/resume"

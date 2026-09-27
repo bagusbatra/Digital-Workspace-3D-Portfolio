@@ -1,29 +1,38 @@
 import { Link } from "react-router-dom";
+import { useUIStore, type ActivePanelId } from "@/state/uiStore";
 
-const ITEMS = [
-  { label: "ABOUT", to: "/workspace#about" },
-  { label: "PROJECTS", to: "/projects" },
-  { label: "SKILLS", to: "/workspace#skills" },
-  { label: "EXPERIENCE", to: "/workspace#experience" },
-  { label: "CONTACT", to: "/workspace#contact" },
+const ITEMS: { label: string; panel: ActivePanelId }[] = [
+  { label: "ABOUT", panel: "about" },
+  { label: "SKILLS", panel: "skills" },
+  { label: "EXPERIENCE", panel: "experience" },
+  { label: "CONTACT", panel: "contact" },
 ];
 
 // Fallback navigasi mobile (PRD §21) — tidak memaksakan workspace 3D penuh di layar kecil.
+// Item konten dibuka sebagai panel (uiStore), Projects tetap link ke halaman terpisah.
 export default function MobileMenu() {
+  const openPanel = useUIStore((s) => s.openPanel);
+
   return (
     <nav
       aria-label="Mobile navigation"
-      className="flex flex-col gap-3 px-6 py-8 md:hidden"
+      className="flex flex-col gap-3 px-6 py-8"
     >
       {ITEMS.map((item) => (
-        <Link
+        <button
           key={item.label}
-          to={item.to}
+          onClick={() => openPanel(item.panel)}
           className="rounded border border-surface bg-surface px-4 py-3 text-center text-sm font-medium text-text"
         >
           {item.label}
-        </Link>
+        </button>
       ))}
+      <Link
+        to="/projects"
+        className="rounded border border-surface bg-surface px-4 py-3 text-center text-sm font-medium text-text"
+      >
+        PROJECTS
+      </Link>
     </nav>
   );
 }
