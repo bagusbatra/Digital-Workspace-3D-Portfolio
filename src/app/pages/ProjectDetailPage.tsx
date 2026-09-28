@@ -1,10 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import { projects } from "@/data/projects";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 // PRD §11 — Project Detail lengkap.
 export default function ProjectDetailPage() {
   const { id } = useParams();
   const project = projects.find((p) => p.id === id);
+  useDocumentTitle(project ? project.title : "Project not found");
 
   if (!project) {
     return (

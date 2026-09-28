@@ -14,7 +14,7 @@ export default function Phone() {
     <group ref={groupRef} position={[1.4, 0.46, 0.2]} onClick={handleClick} {...handlers}>
       <mesh rotation={[-Math.PI / 2.4, 0, 0]}>
         <boxGeometry args={[0.16, 0.32, 0.02]} />
-        <meshStandardMaterial color="#0B0D10" emissive="#2158F5" emissiveIntensity={0.2} />
+        <meshStandardMaterial color="#2A2F38" emissive="#2158F5" emissiveIntensity={0.35} />
       </mesh>
       {hovered && (
         <Html position={[0, 0.2, 0]} center distanceFactor={4}>

@@ -2,12 +2,14 @@ import { Suspense } from "react";
 import MobileMenu from "../../components/MobileMenu";
 import WebGLFallback from "../../components/WebGLFallback";
 import Workspace from "../../three/Workspace";
+import WorkspaceLoadingFallback from "../../components/WorkspaceLoadingFallback";
 import AboutPanel from "../../components/panels/AboutPanel";
 import SkillsPanel from "../../components/panels/SkillsPanel";
 import ExperiencePanel from "../../components/panels/ExperiencePanel";
 import ProjectsPanel from "../../components/panels/ProjectsPanel";
 import ContactPanel from "../../components/panels/ContactPanel";
 import { useWebGLSupport } from "../../hooks/useWebGLSupport";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { useUIStore } from "@/state/uiStore";
 
 // Desktop/tablet: scene 3D interaktif. Mobile: fallback menu konvensional (PRD §21).
@@ -15,6 +17,7 @@ import { useUIStore } from "@/state/uiStore";
 // baik interaksi 3D maupun MobileMenu sama-sama memicu uiStore.activePanel.
 // Contact panel diimplementasikan di Iterasi 05.
 export default function WorkspacePage() {
+  useDocumentTitle("Workspace");
   const webglSupported = useWebGLSupport();
   const activeObject = useUIStore((s) => s.activeObject);
   const activePanel = useUIStore((s) => s.activePanel);
@@ -25,17 +28,13 @@ export default function WorkspacePage() {
 
   return (
     <section className="relative flex h-full flex-col bg-background text-text">
+      <h1 className="sr-only">Digital Workspace — Bagus Batra</h1>
+
       <div className="hidden flex-1 md:block">
         {webglSupported === false ? (
           <WebGLFallback onContinue={() => {}} />
         ) : (
-          <Suspense
-            fallback={
-              <div className="flex h-full items-center justify-center font-mono text-sm text-secondary">
-                Loading 3D assets...
-              </div>
-            }
-          >
+          <Suspense fallback={<WorkspaceLoadingFallback />}>
             <Workspace />
           </Suspense>
         )}

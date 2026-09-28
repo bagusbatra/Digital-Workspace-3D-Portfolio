@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useUIStore, type ActivePanelId } from "@/state/uiStore";
+import SettingsToggles from "./SettingsToggles";
 
 const SECTIONS: { label: string; panel: ActivePanelId }[] = [
   { label: "ABOUT", panel: "about" },
@@ -17,11 +18,18 @@ export default function Navbar() {
   const navigate = useNavigate();
   const openPanel = useUIStore((s) => s.openPanel);
   const inWorkspace = location.pathname.startsWith("/workspace");
+  const isLanding = location.pathname === "/";
 
   const goToPanel = (panel: ActivePanelId) => {
     openPanel(panel);
     if (!inWorkspace) navigate("/workspace");
   };
+
+  // Landing (PRD §7) sengaja tanpa navbar — layar first-impression yang polos
+  // sebelum user masuk ke Workspace, sesuai mockup PRD.
+  if (isLanding) {
+    return null;
+  }
 
   if (inWorkspace) {
     return (
@@ -33,9 +41,12 @@ export default function Navbar() {
           ☰
         </button>
         <span className="font-medium">BAGUS BATRA</span>
-        <Link to="/" className="font-mono text-secondary hover:text-text">
-          EXIT WORKSPACE
-        </Link>
+        <div className="flex items-center gap-3">
+          <SettingsToggles />
+          <Link to="/" className="font-mono text-secondary hover:text-text">
+            EXIT WORKSPACE
+          </Link>
+        </div>
       </nav>
     );
   }
@@ -62,12 +73,17 @@ export default function Navbar() {
           </Link>
         </li>
       </ul>
-      <Link
-        to="/resume"
-        className="rounded border border-primary px-3 py-1.5 text-primary hover:bg-primary hover:text-text"
-      >
-        RESUME
-      </Link>
+      <div className="flex items-center gap-3">
+        <div className="hidden md:block">
+          <SettingsToggles />
+        </div>
+        <Link
+          to="/resume"
+          className="rounded border border-primary px-3 py-1.5 text-primary hover:bg-primary hover:text-text"
+        >
+          RESUME
+        </Link>
+      </div>
     </nav>
   );
 }

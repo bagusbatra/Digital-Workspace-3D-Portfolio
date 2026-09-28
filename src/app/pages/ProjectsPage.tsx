@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { projects } from "@/data/projects";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 // REQ-010 — akses non-3D ke project list (§6 Information Architecture).
 export default function ProjectsPage() {
+  useDocumentTitle("Projects");
   return (
     <section className="mx-auto max-w-3xl px-6 py-12 text-text">
       <h1 className="text-2xl font-semibold">Projects</h1>

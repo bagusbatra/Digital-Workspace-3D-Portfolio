@@ -17,7 +17,7 @@ export default function DeskLamp() {
     <group ref={groupRef} position={[1.2, 0.46, 0.4]} onClick={handleClick} {...handlers}>
       <mesh position={[0, 0.25, 0]}>
         <cylinderGeometry args={[0.02, 0.02, 0.5, 8]} />
-        <meshStandardMaterial color="#14171C" />
+        <meshStandardMaterial color="#3A414C" />
       </mesh>
       <mesh position={[0, 0.5, 0]} rotation={[Math.PI / 6, 0, 0]}>
         <coneGeometry args={[0.12, 0.18, 12]} />

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import LandingPage from "./pages/LandingPage";
@@ -5,8 +6,18 @@ import WorkspacePage from "./pages/WorkspacePage";
 import ProjectsPage from "./pages/ProjectsPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import ResumePage from "./pages/ResumePage";
+import { useUIStore } from "@/state/uiStore";
 
 export default function App() {
+  // Hormati preferensi sistem "prefers-reduced-motion" sebagai default awal
+  // (PRD §22) — user tetap bisa override manual lewat SettingsToggles.
+  useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) {
+      useUIStore.setState({ reducedMotion: true });
+    }
+  }, []);
+
   return (
     <BrowserRouter>
       <a

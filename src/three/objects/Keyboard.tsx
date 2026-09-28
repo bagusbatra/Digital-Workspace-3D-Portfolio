@@ -14,7 +14,7 @@ export default function Keyboard() {
     <group ref={groupRef} position={[0, 0.46, 0.35]} onClick={handleClick} {...handlers}>
       <mesh>
         <boxGeometry args={[0.55, 0.03, 0.2]} />
-        <meshStandardMaterial color="#14171C" />
+        <meshStandardMaterial color="#3A414C" />
       </mesh>
       {hovered && (
         <Html position={[0, 0.15, 0]} center distanceFactor={4}>

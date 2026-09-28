@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useUIStore, type ActivePanelId } from "@/state/uiStore";
+import SettingsToggles from "./SettingsToggles";
 
 const ITEMS: { label: string; panel: ActivePanelId }[] = [
   { label: "ABOUT", panel: "about" },
@@ -33,6 +34,9 @@ export default function MobileMenu() {
       >
         PROJECTS
       </Link>
+      <div className="mt-2 flex justify-center">
+        <SettingsToggles />
+      </div>
     </nav>
   );
 }
