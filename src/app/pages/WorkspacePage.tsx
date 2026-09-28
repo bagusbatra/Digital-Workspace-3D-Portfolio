@@ -6,6 +6,7 @@ import AboutPanel from "../../components/panels/AboutPanel";
 import SkillsPanel from "../../components/panels/SkillsPanel";
 import ExperiencePanel from "../../components/panels/ExperiencePanel";
 import ProjectsPanel from "../../components/panels/ProjectsPanel";
+import ContactPanel from "../../components/panels/ContactPanel";
 import { useWebGLSupport } from "../../hooks/useWebGLSupport";
 import { useUIStore } from "@/state/uiStore";
 
@@ -54,11 +55,7 @@ export default function WorkspacePage() {
           {activePanel === "skills" && <SkillsPanel onClose={closePanel} />}
           {activePanel === "experience" && <ExperiencePanel onClose={closePanel} />}
           {activePanel === "projects" && <ProjectsPanel onClose={closePanel} />}
-          {activePanel === "contact" && (
-            <div className="rounded border border-surface bg-surface px-6 py-4 font-mono text-sm text-secondary">
-              [ CONTACT — akan diisi di Iterasi 05 ]
-            </div>
-          )}
+          {activePanel === "contact" && <ContactPanel onClose={closePanel} />}
           {isCoffeeEasterEgg && (
             <div className="rounded border border-surface bg-surface px-6 py-4 text-center">
               <p className="font-mono text-sm font-medium">COFFEE DETECTED</p>
